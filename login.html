@@ -4,37 +4,69 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lab Management System - Login</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/themes.css">
+  <style>
+    body { font-family: Arial, sans-serif; background:#111; color:#eee; display:flex; justify-content:center; align-items:center; height:100vh; }
+    .card { background:#222; padding:30px; border-radius:10px; box-shadow:0 0 15px rgba(0,0,0,0.6); width:300px; }
+    h2 { text-align:center; margin-bottom:20px; }
+    label { display:block; margin-top:10px; }
+    input { width:100%; padding:10px; margin-top:5px; border:none; border-radius:5px; }
+    button { width:100%; padding:10px; margin-top:15px; background:#0d6efd; color:white; border:none; border-radius:5px; cursor:pointer; }
+    button:hover { background:#0b5ed7; }
+    #loginMessage { margin-top:10px; text-align:center; }
+  </style>
 </head>
 <body>
-  <header class="app-header">
-    <img src="images/logo.png" alt="Lab Logo" class="logo">
-    <h1>AlphaMed Clinical Laboratory</h1>
-  </header>
+  <div class="card">
+    <h2>AlphaMed Clinical Lab</h2>
+    <form id="loginForm">
+      <label for="username">Username</label>
+      <input type="text" id="username" required>
 
-  <main class="app-main">
-    <div class="login-box card">
-      <h2>Login</h2>
-      <form id="loginForm">
-        <label for="username">Username</label>
-        <input type="text" id="username" placeholder="Enter your username" required>
+      <label for="password">Password</label>
+      <input type="password" id="password" required>
 
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter your password" required>
+      <button type="submit">Login</button>
+      <p id="loginMessage"></p>
+    </form>
+  </div>
 
-        <button type="submit" class="btn">Login</button>
-      </form>
-      <p id="loginMessage" style="color:red; margin-top:10px;"></p>
-    </div>
-  </main>
+  <script>
+    // ✅ Force reset users every time (for testing)
+    localStorage.removeItem("users");
 
-  <footer class="app-footer">
-    <p>&copy; 2025 AlphaMed Clinical Laboratory. All Rights Reserved.</p>
-  </footer>
+    let users = [
+      { id: 1, username: "34501-8971113-7", password: "Asad@2723", role: "admin" },
+      { id: 2, username: "reception", password: "reception123", role: "receptionist" },
+      { id: 3, username: "tech", password: "tech123", role: "technician" }
+    ];
+    localStorage.setItem("users", JSON.stringify(users));
+    console.log("✅ Users set:", users);
 
-  <!-- JS Files -->
-  <script src="js/setup.js"></script>
-  <script src="js/login.js"></script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const msg = document.getElementById("loginMessage");
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      const user = users.find(u => u.username === username && u.password === password);
+
+      if (user) {
+        localStorage.setItem("currentUser", JSON.stringify(user));
+        msg.style.color = "lightgreen";
+        msg.textContent = "✅ Login successful, redirecting...";
+
+        setTimeout(() => {
+          if (user.role === "admin") window.location.href = "admin-dashboard.html";
+          else if (user.role === "receptionist") window.location.href = "reception-dashboard.html";
+          else if (user.role === "technician") window.location.href = "technician-dashboard.html";
+        }, 1200);
+      } else {
+        msg.style.color = "red";
+        msg.textContent = "❌ Invalid username or password!";
+      }
+    });
+  </script>
 </body>
 </html>
