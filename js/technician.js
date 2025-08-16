@@ -1,35 +1,62 @@
-import { Results, Patients, Tests } from "./data.js";
+/* ======================================
+   technician.js - Technician Dashboard
+   Handles Assigned Tests & Results
+====================================== */
 
-function render(){
-  const tbody = document.querySelector("#resultTable tbody");
-  if(!tbody) return;
-  tbody.innerHTML = "";
-  Results.all().slice().reverse().forEach(r => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${r.sampleId}</td><td>${r.patientId}</td><td>${r.testCode}</td><td>${r.value} ${r.unit||""}</td><td>${r.date}</td>`;
-    tbody.appendChild(tr);
+document.addEventListener("DOMContentLoaded", () => {
+  loadAssignedTests();
+});
+
+/* ==============================
+   LOAD ASSIGNED TESTS
+============================== */
+function loadAssignedTests() {
+  const tableBody = document.getElementById("tests-table-body");
+  if (!tableBody) return;
+
+  tableBody.innerHTML = "";
+  const patients = JSON.parse(localStorage.getItem("patients")) || [];
+
+  patients.forEach((patient) => {
+    patient.tests.forEach((test, idx) => {
+      if (test.status === "Pending") {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td>${patient.name}</td>
+          <td>${test.name}</td>
+          <td>${test.status}</td>
+          <td>
+            <button class="btn btn-small" onclick="completeTest(${patient.id}, ${idx})">
+              Mark Completed
+            </button>
+          </td>
+        `;
+
+        tableBody.appendChild(row);
+      }
+    });
   });
 }
 
-function addResult(e){
-  e.preventDefault();
-  const form = e.target;
-  const r = {
-    sampleId: "S"+Date.now().toString(36),
-    patientId: form.querySelector("#patientId").value.trim(),
-    testCode: form.querySelector("#testCode").value,
-    value: form.querySelector("#value").value.trim(),
-    unit: form.querySelector("#unit").value.trim(),
-    date: new Date().toISOString().slice(0,10)
-  };
-  Results.add(r);
-  alert("Result added: "+r.sampleId);
-  form.reset();
-  render();
-}
+/* ==============================
+   COMPLETE TEST
+============================== */
+function completeTest(patientId, testIndex) {
+  let patients = JSON.parse(localStorage.getItem("patients")) || [];
+  const patient = patients.find((p) => p.id === patientId);
 
-document.addEventListener("DOMContentLoaded", ()=>{
-  App.require(["technician","admin"]);
-  document.querySelector("form[data-result]")?.addEventListener("submit", addResult);
-  render();
-});
+  if (patient) {
+    const test = patient.tests[testIndex];
+
+    const result = prompt(`Enter result for ${test.name}:`);
+    if (!result) return;
+
+    test.status = "Completed";
+    test.result = result;
+
+    localStorage.setItem("patients", JSON.stringify(patients));
+    alert(`✅ Test '${test.name}' for ${patient.name} marked as completed.`);
+    loadAssignedTests();
+  }
+}
