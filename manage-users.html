@@ -1,16 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Manage Users — MedLab Pro</title>
-  <link rel="stylesheet" href="css/themes.css"/>
-  <script defer src="js/app.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Users - AlphaMed Clinical Laboratory</title>
+  <link rel="stylesheet" href="css/themes.css" />
+  <script type="module" src="js/manage-users.js"></script>
+  <script type="module" src="js/app.js"></script>
 </head>
 <body>
-  <div class="card">
+  <header class="app-header">
+    <img src="assets/logo.png" alt="AlphaMed Clinical Laboratory" class="logo" />
+    <h1>AlphaMed Clinical Laboratory</h1>
+    <nav class="header-actions">
+      <select id="theme-selector"></select>
+      <select id="lang-selector">
+        <option value="en">English</option>
+        <option value="ur">اردو</option>
+      </select>
+      <button id="logout-btn">Logout</button>
+    </nav>
+  </header>
+
+  <main class="app-main">
     <h2>Manage Users</h2>
-    <p>Demo-only: user management would connect to backend in production.</p>
-  </div>
+
+    <section class="form-section">
+      <h3>Add New User</h3>
+      <form id="user-form">
+        <label>
+          Full Name
+          <input type="text" id="user-name" required />
+        </label>
+        <label>
+          Email
+          <input type="email" id="user-email" required />
+        </label>
+        <label>
+          Role
+          <select id="user-role" required>
+            <option value="admin">Admin</option>
+            <option value="reception">Reception</option>
+            <option value="technician">Technician</option>
+          </select>
+        </label>
+        <label>
+          Password
+          <input type="password" id="user-password" required />
+        </label>
+        <button type="submit" class="btn">Add User</button>
+      </form>
+    </section>
+
+    <section class="list-section">
+      <h3>Existing Users</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="user-list"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>&copy; 2025 AlphaMed Clinical Laboratory — Quality Assurance Through Advance Technology</p>
+  </footer>
 </body>
 </html>
