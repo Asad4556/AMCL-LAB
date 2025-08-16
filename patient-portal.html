@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Portal</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-theme">
+  <header>
+    <h1>📄 Patient Portal</h1>
+    <button onclick="window.location.href='login.html'">🔙 Back to Login</button>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Check Your Report</h2>
+      <form id="reportForm">
+        <input type="text" id="searchCnic" placeholder="Enter your CNIC" required>
+        <button type="submit">🔍 Search</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Report Result</h2>
+      <div id="reportResult">Enter CNIC above to see report.</div>
+    </section>
+  </main>
+
+  <script src="patient-portal.js"></script>
+</body>
+</html>
