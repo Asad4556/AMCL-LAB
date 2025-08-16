@@ -2,14 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Technician Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <div class="card">
-    <h2>Technician Dashboard</h2>
-    <p>Welcome Technician!</p>
-    <a href="index.html">Logout</a>
-  </div>
+<body class="dark-theme">
+  <header>
+    <h1>🔬 Technician Dashboard</h1>
+    <button onclick="window.location.href='login.html'">🚪 Logout</button>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Patients for Testing</h2>
+      <ul id="patientList"></ul>
+    </section>
+  </main>
+
+  <script src="technician-dashboard.js"></script>
 </body>
 </html>
