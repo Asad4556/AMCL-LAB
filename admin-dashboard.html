@@ -2,14 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <div class="card">
-    <h2>Admin Dashboard</h2>
-    <p>Welcome Admin!</p>
-    <a href="index.html">Logout</a>
-  </div>
+<body class="dark-theme">
+  <header>
+    <h1>🧪 Admin Dashboard</h1>
+    <button id="logoutBtn">Logout</button>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Departments</h2>
+      <button onclick="window.location.href='departments.html'">Manage Departments</button>
+    </section>
+
+    <section class="card">
+      <h2>Tests</h2>
+      <button onclick="window.location.href='tests.html'">Manage Tests</button>
+    </section>
+
+    <section class="card">
+      <h2>Users</h2>
+      <button onclick="window.location.href='users.html'">Manage Users</button>
+    </section>
+
+    <section class="card">
+      <h2>Reports</h2>
+      <button onclick="window.location.href='reports.html'">Generate Reports</button>
+    </section>
+  </main>
+
+  <script src="logout.js"></script>
 </body>
 </html>
