@@ -1,45 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Technician Dashboard — MedLab Pro</title>
-  <link rel="stylesheet" href="css/themes.css"/>
-  <script defer src="js/app.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Technician Dashboard - AlphaMed Clinical Laboratory</title>
+  <link rel="stylesheet" href="css/themes.css" />
+  <script type="module" src="js/technician.js"></script>
+  <script type="module" src="js/app.js"></script>
 </head>
 <body>
-  <div class="grid cols-2">
-    <div class="card">
-      <h2>Add Test Result</h2>
-      <form data-result>
-        <label>Patient ID</label>
-        <input id="patientId" class="input" placeholder="e.g., Pks83f9"/>
-        <div style="height:8px"></div>
-        <label>Test</label>
-        <select id="testCode" class="input">
-          <option value="CBC">CBC</option>
-          <option value="GLU">Fasting Glucose</option>
-          <option value="CRP">CRP</option>
-          <option value="HBV-PCR">HBV PCR</option>
-        </select>
-        <div style="height:8px"></div>
-        <label>Value</label>
-        <input id="value" class="input"/>
-        <div style="height:8px"></div>
-        <label>Unit</label>
-        <input id="unit" class="input" placeholder="mg/dL, IU/mL..."/>
-        <div style="height:12px"></div>
-        <button class="btn btn-primary" type="submit">Save Result</button>
-      </form>
-    </div>
-    <div class="card">
-      <h2>Recent Results</h2>
-      <table class="table" id="resultTable">
-        <thead><tr><th>Sample</th><th>Patient</th><th>Test</th><th>Value</th><th>Date</th></tr></thead>
-        <tbody></tbody>
+  <header class="app-header">
+    <img src="assets/logo.png" alt="AlphaMed Clinical Laboratory" class="logo" />
+    <h1>AlphaMed Clinical Laboratory</h1>
+    <nav class="header-actions">
+      <select id="theme-selector"></select>
+      <select id="lang-selector">
+        <option value="en">English</option>
+        <option value="ur">اردو</option>
+      </select>
+      <button id="logout-btn">Logout</button>
+    </nav>
+  </header>
+
+  <main class="app-main">
+    <h2>Technician Dashboard</h2>
+
+    <section class="list-section">
+      <h3>Pending Tests</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Patient Name</th>
+            <th>Test</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="test-list"></tbody>
       </table>
-    </div>
-  </div>
-  <script type="module" src="js/technician.js"></script>
+    </section>
+
+    <section class="form-section">
+      <h3>Upload Test Result</h3>
+      <form id="result-form">
+        <label>
+          Patient Name
+          <input type="text" id="result-patient" required />
+        </label>
+        <label>
+          Test Name
+          <input type="text" id="result-test" required />
+        </label>
+        <label>
+          Result
+          <textarea id="result-data" required></textarea>
+        </label>
+        <button type="submit" class="btn">Submit Result</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>&copy; 2025 AlphaMed Clinical Laboratory — Quality Assurance Through Advance Technology</p>
+  </footer>
 </body>
 </html>
