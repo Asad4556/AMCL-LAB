@@ -1,71 +1,84 @@
-import { Departments, Tests, Patients } from "./data.js";
+/* ======================================
+   reception.js - Receptionist Dashboard
+   Handles Patient Registration & Tests
+====================================== */
 
-function el(tag, attrs={}, children=[]){
-  const e = document.createElement(tag);
-  Object.entries(attrs).forEach(([k,v])=> e.setAttribute(k,v));
-  (Array.isArray(children)?children:[children]).forEach(c => {
-    if(typeof c==="string") e.appendChild(document.createTextNode(c));
-    else if(c) e.appendChild(c);
-  });
-  return e;
-}
-
-function populateDepartments(){
-  const sel = document.getElementById("department");
-  if(!sel) return;
-  sel.innerHTML = '<option value="">-- Select Department --</option>';
-  Departments.forEach(d => {
-    const o = document.createElement("option"); o.value=d.id; o.textContent=d.name; sel.appendChild(o);
-  });
-}
-function populateTests(){
-  const dep = document.getElementById("department")?.value;
-  const list = document.getElementById("tests");
-  if(!list) return;
-  list.innerHTML="";
-  (Tests[dep]||[]).forEach(t => {
-    const label = el("label", {}, [
-      el("input", {type:"checkbox", value:t.code}),
-      ` ${t.name} (${t.code})`
-    ]);
-    label.style.display="block";
-    list.appendChild(label);
-  });
-}
-
-function registerPatient(e){
-  e.preventDefault();
-  const form = e.target;
-  const p = {
-    id: "P"+Date.now().toString(36),
-    name: form.querySelector("#pname").value.trim(),
-    phone: form.querySelector("#pphone").value.trim(),
-    dob: form.querySelector("#pdob").value,
-    tests: Array.from(document.querySelectorAll("#tests input[type='checkbox']:checked")).map(i=>i.value),
-    department: document.getElementById("department").value
-  };
-  Patients.add(p);
-  alert("Patient registered with ID: "+p.id);
-  form.reset();
-  populateTests();
-  renderPatientTable();
-}
-
-function renderPatientTable(){
-  const tbody = document.querySelector("#patientTable tbody");
-  if(!tbody) return;
-  tbody.innerHTML = "";
-  Patients.all().slice().reverse().forEach(p => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${p.id}</td><td>${p.name}</td><td>${p.phone}</td><td>${p.department}</td><td>${p.tests.join(", ")}</td>`;
-    tbody.appendChild(tr);
-  });
-}
-
-document.addEventListener("DOMContentLoaded", ()=>{
-  App.require(["reception","admin"]);
-  populateDepartments();
-  document.getElementById("department")?.addEventListener("change", populateTests);
-  document.querySelector("form[data-register]")?.addEventListener("submit", registerPatient);
-  renderPatientTable();
+document.addEventListener("DOMContentLoaded", () => {
+  initPatientForm();
+  loadPatients();
 });
+
+/* ==============================
+   PATIENT REGISTRATION
+============================== */
+function initPatientForm() {
+  const form = document.getElementById("patient-form");
+  if (!form) return;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const patient = {
+      id: Date.now(),
+      name: document.getElementById("p-name").value.trim(),
+      age: document.getElementById("p-age").value.trim(),
+      gender: document.getElementById("p-gender").value,
+      contact: document.getElementById("p-contact").value.trim(),
+      tests: [],
+    };
+
+    // Save in localStorage
+    let patients = JSON.parse(localStorage.getItem("patients")) || [];
+    patients.push(patient);
+    localStorage.setItem("patients", JSON.stringify(patients));
+
+    form.reset();
+    loadPatients();
+  });
+}
+
+/* ==============================
+   LOAD PATIENT LIST
+============================== */
+function loadPatients() {
+  const tableBody = document.getElementById("patients-table-body");
+  if (!tableBody) return;
+
+  tableBody.innerHTML = "";
+  const patients = JSON.parse(localStorage.getItem("patients")) || [];
+
+  patients.forEach((patient) => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${patient.name}</td>
+      <td>${patient.age}</td>
+      <td>${patient.gender}</td>
+      <td>${patient.contact}</td>
+      <td>
+        <button class="btn btn-small" onclick="assignTest(${patient.id})">
+          Assign Test
+        </button>
+      </td>
+    `;
+
+    tableBody.appendChild(row);
+  });
+}
+
+/* ==============================
+   ASSIGN TESTS TO PATIENT
+============================== */
+function assignTest(patientId) {
+  const testName = prompt("Enter Test Name (e.g., Blood Test, X-Ray):");
+  if (!testName) return;
+
+  let patients = JSON.parse(localStorage.getItem("patients")) || [];
+  const index = patients.findIndex((p) => p.id === patientId);
+
+  if (index !== -1) {
+    patients[index].tests.push({ name: testName, status: "Pending" });
+    localStorage.setItem("patients", JSON.stringify(patients));
+    alert(`✅ Test '${testName}' assigned to ${patients[index].name}`);
+  }
+}
