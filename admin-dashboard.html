@@ -1,53 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard - AlphaMed Clinical Laboratory</title>
-  <link rel="stylesheet" href="css/themes.css" />
-  <script type="module" src="js/admin.js"></script>
-  <script type="module" src="js/app.js"></script>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="app-header">
-    <img src="assets/logo.png" alt="AlphaMed Clinical Laboratory" class="logo" />
-    <h1>AlphaMed Clinical Laboratory</h1>
-    <nav class="header-actions">
-      <select id="theme-selector"></select>
-      <select id="lang-selector">
-        <option value="en">English</option>
-        <option value="ur">اردو</option>
-      </select>
-      <button id="logout-btn">Logout</button>
-    </nav>
-  </header>
-
-  <main class="app-main">
+  <div class="card">
     <h2>Admin Dashboard</h2>
-    <section class="stats">
-      <div class="card">
-        <h3>Total Patients</h3>
-        <p id="total-patients">0</p>
-      </div>
-      <div class="card">
-        <h3>Total Results</h3>
-        <p id="total-results">0</p>
-      </div>
-      <div class="card">
-        <h3>Today’s Patients</h3>
-        <p id="todays-patients">0</p>
-      </div>
-    </section>
-
-    <section class="links">
-      <a href="manage-users.html" class="btn">Manage Users</a>
-      <a href="view-reports.html" class="btn">View Reports</a>
-      <a href="export.html" class="btn">Export Data</a>
-    </section>
-  </main>
-
-  <footer class="app-footer">
-    <p>&copy; 2025 AlphaMed Clinical Laboratory — Quality Assurance Through Advance Technology</p>
-  </footer>
+    <p>Welcome Admin!</p>
+    <a href="index.html">Logout</a>
+  </div>
 </body>
 </html>
