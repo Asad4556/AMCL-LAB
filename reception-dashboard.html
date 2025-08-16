@@ -2,14 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reception Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <div class="card">
-    <h2>Reception Dashboard</h2>
-    <p>Welcome Receptionist!</p>
-    <a href="index.html">Logout</a>
-  </div>
+<body class="dark-theme">
+  <header>
+    <h1>🏥 Reception Dashboard</h1>
+    <button onclick="window.location.href='login.html'">🚪 Logout</button>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Register Patient</h2>
+      <form id="patientForm">
+        <input type="text" id="pName" placeholder="Full Name" required>
+        <input type="text" id="pCnic" placeholder="CNIC" required>
+        <input type="text" id="pContact" placeholder="Contact Number" required>
+        
+        <select id="pDepartment" required></select>
+        <select id="pTest" required></select>
+
+        <button type="submit">Register</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Registered Patients</h2>
+      <ul id="patientList"></ul>
+    </section>
+  </main>
+
+  <script src="reception-dashboard.js"></script>
 </body>
 </html>
