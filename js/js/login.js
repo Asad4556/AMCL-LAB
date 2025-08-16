@@ -1,46 +1,32 @@
 /* ======================================
-   login.js - Authentication Controller
-   Handles Login, Role-based Redirect
+   login.js - Handle User Login
 ====================================== */
-
 document.addEventListener("DOMContentLoaded", () => {
-  const loginForm = document.getElementById("login-form");
+  const form = document.getElementById("loginForm");
+  const msg = document.getElementById("loginMessage");
 
-  // Demo users (Admin, Receptionist, Technician)
-  const users = [
-    { username: "admin", password: "12345", role: "admin" },
-    { username: "reception", password: "12345", role: "reception" },
-    { username: "technician", password: "12345", role: "technician" }
-  ];
-
-  loginForm.addEventListener("submit", (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
-    const errorBox = document.getElementById("login-error");
 
-    // Check credentials
-    const user = users.find(
-      (u) => u.username === username && u.password === password
-    );
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    const user = users.find(u => u.username === username && u.password === password);
 
-    if (!user) {
-      errorBox.textContent = "Invalid username or password!";
-      errorBox.style.display = "block";
-      return;
-    }
+    if (user) {
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      msg.style.color = "green";
+      msg.textContent = "✅ Login successful! Redirecting...";
 
-    // Save session
-    localStorage.setItem("currentUser", JSON.stringify(user));
-
-    // Redirect by role
-    if (user.role === "admin") {
-      window.location.href = "manage-users.html";
-    } else if (user.role === "reception") {
-      window.location.href = "reception-dashboard.html";
-    } else if (user.role === "technician") {
-      window.location.href = "technician-dashboard.html";
+      setTimeout(() => {
+        if (user.role === "admin") window.location.href = "admin-dashboard.html";
+        else if (user.role === "receptionist") window.location.href = "reception-dashboard.html";
+        else if (user.role === "technician") window.location.href = "technician-dashboard.html";
+      }, 1000);
+    } else {
+      msg.style.color = "red";
+      msg.textContent = "❌ Invalid username or password!";
     }
   });
 });
