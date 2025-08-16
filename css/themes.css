@@ -1,0 +1,94 @@
+:root {
+  --radius: 16px;
+  --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", "Helvetica Neue", Arial;
+  --bg: #0b0f14;
+  --surface: #121821;
+  --surface-2: #182131;
+  --text: #e8edf7;
+  --muted: #92a0b7;
+  --border: #263246;
+  --accent: #3b82f6;
+  --accent-contrast: #0e1626;
+  --positive: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+}
+
+/* 12 accent variants */
+[data-accent="slate"]   { --accent:#94a3b8; --accent-contrast:#0f172a;}
+[data-accent="gray"]    { --accent:#9ca3af; --accent-contrast:#111827;}
+[data-accent="red"]     { --accent:#ef4444; --accent-contrast:#1f0a0a;}
+[data-accent="orange"]  { --accent:#f97316; --accent-contrast:#1f1208;}
+[data-accent="amber"]   { --accent:#f59e0b; --accent-contrast:#1a1203;}
+[data-accent="yellow"]  { --accent:#eab308; --accent-contrast:#1a1400;}
+[data-accent="lime"]    { --accent:#84cc16; --accent-contrast:#0e1603;}
+[data-accent="green"]   { --accent:#22c55e; --accent-contrast:#08140e;}
+[data-accent="teal"]    { --accent:#14b8a6; --accent-contrast:#061513;}
+[data-accent="blue"]    { --accent:#3b82f6; --accent-contrast:#0a1222;}
+[data-accent="indigo"]  { --accent:#6366f1; --accent-contrast:#0b0d22;}
+[data-accent="purple"]  { --accent:#a855f7; --accent-contrast:#150a1e;}
+
+*{box-sizing: border-box} html,body{height:100%}
+html{color-scheme: dark}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.5}
+a{color:var(--text);text-decoration:none}
+.img{max-width:100%;height:auto}
+
+.input, select, textarea{
+  width:100%;
+  padding:12px 14px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+button,.btn{
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--surface), var(--surface-2));
+  color: var(--text);
+  cursor: pointer;
+}
+button:hover,.btn:hover{border-color: var(--accent)}
+.btn-primary{ background: var(--accent); border-color: var(--accent); color: white; }
+.btn-ghost{ background: transparent; border-color: var(--border); }
+.badge{ display:inline-flex; gap:6px; padding:5px 10px; border-radius:999px; border:1px solid var(--border); background:var(--accent-contrast); font-size:.85rem}
+
+.container{ display:grid; grid-template-columns: 260px 1fr; min-height:100vh }
+@media (max-width: 980px){ .container{ grid-template-columns: 1fr } .sidebar{position:static;height:auto} }
+
+.sidebar{ background: var(--surface-2); border-right:1px solid var(--border); padding:18px; position:sticky; top:0; height:100vh }
+.brand{ display:flex; align-items:center; gap:10px; margin-bottom:14px }
+.brand .title{ font-weight:700; letter-spacing:.3px }
+.nav{ display:flex; flex-direction:column; gap:8px; margin-top:10px }
+.nav a{ padding:10px 12px; border-radius:12px; border:1px solid transparent; display:flex; align-items:center; justify-content:space-between }
+.nav a.active,.nav a:hover{ background:rgba(255,255,255,.04); border-color:var(--border) }
+
+.header{ display:flex; align-items:center; justify-content:space-between; padding:12px 18px; border-bottom:1px solid var(--border); background:var(--surface); position:sticky; top:0; z-index:5 }
+.header .right{ display:flex; align-items:center; gap:10px }
+
+main{ padding:22px }
+.card{ background: linear-gradient(180deg, var(--surface), var(--surface-2)); border:1px solid var(--border); border-radius:20px; padding:16px; box-shadow:0 10px 24px rgba(0,0,0,.2) }
+.grid{ display:grid; gap:16px }
+.grid.cols-2{ grid-template-columns:repeat(2,minmax(0,1fr)) }
+.grid.cols-3{ grid-template-columns:repeat(3,minmax(0,1fr)) }
+.grid.cols-4{ grid-template-columns:repeat(4,minmax(0,1fr)) }
+@media (max-width: 1100px){ .grid.cols-3,.grid.cols-4{ grid-template-columns:1fr } }
+
+.table{ width:100%; border-collapse: collapse }
+.table th,.table td{ border-bottom:1px solid var(--border); padding:10px; text-align:left }
+.table th{ color:var(--muted); font-weight:600 }
+
+.footer{ color:var(--muted); font-size:.9rem; padding:14px 18px; border-top:1px solid var(--border) }
+.hr{ border-bottom:1px solid var(--border); margin:12px 0 }
+.tag{ padding:4px 8px; border-radius:10px; background: var(--accent-contrast); border:1px solid var(--border); color: var(--text); font-size:.85rem }
+.link{ color: var(--accent) }
+
+/* Print styles for slips/reports */
+@media print{
+  body{ background:#fff; color:#000 }
+  .sidebar,.header{ display:none }
+  main{ padding:0 }
+  .card{ box-shadow:none; border:none }
+}
