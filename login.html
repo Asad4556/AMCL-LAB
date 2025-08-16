@@ -1,45 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - AlphaMed Clinical Laboratory</title>
-  <link rel="stylesheet" href="css/themes.css" />
-  <script type="module" src="js/auth.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab Management System - Login</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/themes.css">
 </head>
 <body>
   <header class="app-header">
-    <img src="assets/logo.png" alt="AlphaMed Clinical Laboratory" class="logo" />
+    <img src="images/logo.png" alt="Lab Logo" class="logo">
     <h1>AlphaMed Clinical Laboratory</h1>
   </header>
 
   <main class="app-main">
-    <section class="login-box">
+    <div class="login-box card">
       <h2>Login</h2>
-      <form id="login-form">
-        <label>
-          Username
-          <input type="text" id="username" required />
-        </label>
-        <label>
-          Password
-          <input type="password" id="password" required />
-        </label>
-        <label>
-          Role
-          <select id="role" required>
-            <option value="admin">Admin</option>
-            <option value="reception">Reception</option>
-            <option value="technician">Technician</option>
-          </select>
-        </label>
+      <form id="loginForm">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Enter your username" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+
         <button type="submit" class="btn">Login</button>
       </form>
-    </section>
+      <p id="loginMessage" style="color:red; margin-top:10px;"></p>
+    </div>
   </main>
 
   <footer class="app-footer">
-    <p>&copy; 2025 AlphaMed Clinical Laboratory — Quality Assurance Through Advance Technology</p>
+    <p>&copy; 2025 AlphaMed Clinical Laboratory. All Rights Reserved.</p>
   </footer>
+
+  <!-- JS Files -->
+  <script src="js/setup.js"></script>
+  <script src="js/login.js"></script>
 </body>
 </html>
